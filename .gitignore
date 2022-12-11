@@ -467,3 +467,5 @@ web-build/
 
 # macOS
 .DS_Store
+api/appsettings.json
+api/appsettings.Development.json
