@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-  [ApiController]
   [Route("api/healthcheck")]
-  public class HealthCheckController : ControllerBase
+  public class HealthCheckController : BaseApiController
   {
 
     [HttpGet]

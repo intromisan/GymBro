@@ -2,29 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.Interfaces;
+using api.Data;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class ExerciseController : ControllerBase
+  [Authorize]
+  public class ExerciseController : BaseApiController
   {
-    private readonly IExerciseRepository _exerciseRepository;
-    public ExerciseController(IExerciseRepository exerciseRepository)
+    private readonly DataContext _context;
+    public ExerciseController(DataContext context)
     {
-      _exerciseRepository = exerciseRepository;
+      _context = context;
     }
 
     [HttpGet]
     [ProducesResponseType(200, Type = typeof(IEnumerable<Exercise>))]
-    public IActionResult GetExercises()
+    public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
     {
-      var exercises = _exerciseRepository.GetExercises();
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      var exercises = await _context.Exercises.ToListAsync();
 
       return Ok(exercises);
     }

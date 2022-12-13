@@ -6,8 +6,8 @@ using api.Models;
 
 namespace api.Interfaces
 {
-  public interface IExerciseRepository
+  public interface ITokenService
   {
-    ICollection<Exercise> GetExercises();
+    string CreateToken(User user);
   }
 }
