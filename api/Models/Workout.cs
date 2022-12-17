@@ -12,5 +12,6 @@ namespace api.Models
 
     public Guid UserId { get; set; }
     public User User { get; set; }
+    public List<WorkoutExercise> Exercises { get; set; } = new List<WorkoutExercise>();
   }
 }

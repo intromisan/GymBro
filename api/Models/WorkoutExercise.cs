@@ -26,6 +26,6 @@ namespace api.Models
     public Guid WorkoutId { get; set; }
     public Workout Workout { get; set; }
     public Guid ExerciseId { get; set; }
-    public Exercise Exerice { get; set; }
+    public Exercise Exercise { get; set; }
   }
 }
