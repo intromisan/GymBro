@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
 using api.DTOs;
 using api.Models;
@@ -45,7 +40,7 @@ namespace api.Controllers
 
     [HttpPost]
     [ProducesResponseType(201, Type = typeof(Exercise))]
-    public async Task<ActionResult<Exercise>> CreateExercise(ExerciseDto exerciseDto)
+    public async Task<ActionResult<Exercise>> CreateExercise(CreateExerciseDto exerciseDto)
     {
 
       var newExercise = _mapper.Map<Exercise>(exerciseDto);
@@ -58,7 +53,7 @@ namespace api.Controllers
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateExercise(Guid id, ExerciseDto exerciseDto)
+    public async Task<ActionResult> UpdateExercise(Guid id, CreateExerciseDto exerciseDto)
     {
       var exercise = await FindExerciseById(id);
 

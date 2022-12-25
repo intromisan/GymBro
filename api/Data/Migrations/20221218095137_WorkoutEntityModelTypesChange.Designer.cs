@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221218095137_WorkoutEntityModelTypesChange")]
+    partial class WorkoutEntityModelTypesChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises", (string)null);
+                    b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("api.Models.User", b =>
@@ -68,7 +71,7 @@ namespace api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("api.Models.Workout", b =>
@@ -90,7 +93,7 @@ namespace api.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Workouts", (string)null);
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("api.Models.WorkoutExercise", b =>
@@ -126,7 +129,7 @@ namespace api.Data.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("WorkoutExercises", (string)null);
+                    b.ToTable("WorkoutExercises");
                 });
 
             modelBuilder.Entity("api.Models.Workout", b =>

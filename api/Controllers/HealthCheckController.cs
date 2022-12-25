@@ -11,7 +11,7 @@ namespace api.Controllers
   {
 
     [HttpGet]
-    public IActionResult GetExercises()
+    public IActionResult Get()
     {
       return Ok("Healthy");
     }

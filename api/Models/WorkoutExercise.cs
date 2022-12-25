@@ -5,23 +5,13 @@ using System.Threading.Tasks;
 
 namespace api.Models
 {
-  public enum Weekday
-  {
-    Mon,
-    Tue,
-    Wed,
-    Thu,
-    Fri,
-    Sat,
-    Sun
-  }
   public class WorkoutExercise : EntityBase
   {
-    public byte Reps { get; set; }
-    public byte Sets { get; set; }
-    public short Weight { get; set; }
-    public short RestSeconds { get; set; }
-    public Weekday Weekday { get; set; }
+    public int Reps { get; set; }
+    public int Sets { get; set; }
+    public int Weight { get; set; }
+    public int RestSeconds { get; set; }
+    public DayOfWeek Weekday { get; set; }
 
     public Guid WorkoutId { get; set; }
     public Workout Workout { get; set; }

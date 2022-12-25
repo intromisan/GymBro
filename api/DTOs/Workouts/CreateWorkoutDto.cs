@@ -4,15 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.DTOs
+namespace api.DTOs.Workouts
 {
-  public class ExerciseDto
+  public class CreateWorkoutDto
   {
     [Required(ErrorMessage = "Name is required")]
     public string Name { get; set; }
-    [Required(ErrorMessage = "Description is required")]
-    public string Description { get; set; }
-    public string ImageLink { get; set; }
-    public string VideoLink { get; set; }
   }
 }
