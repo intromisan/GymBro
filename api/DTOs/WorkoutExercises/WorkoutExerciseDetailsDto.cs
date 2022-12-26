@@ -1,8 +1,9 @@
 using api.DTOs.Exercises;
+using api.Models;
 
 namespace api.DTOs.WorkoutExercises
 {
-  public class WorkoutExerciseDetailsDto
+  public class WorkoutExerciseDetailsDto : EntityBase
   {
     public int Reps { get; set; }
     public int Sets { get; set; }

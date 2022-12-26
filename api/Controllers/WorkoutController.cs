@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using api.Data;
 using api.DTOs.Workout;
+using api.DTOs.WorkoutExercises;
 using api.DTOs.Workouts;
 using api.Models;
 using AutoMapper;
@@ -47,6 +48,14 @@ namespace api.Controllers
       }
 
       return Ok(_mapper.Map<WorkoutDetailsDto>(workout));
+    }
+
+    [HttpGet("{workoutId}/exercises")]
+    public async Task<IActionResult> GetWorkoutExercises(Guid workoutId)
+    {
+      var workoutExercises = await _context.WorkoutExercises.Where(we => we.WorkoutId == workoutId).Include(we => we.Exercise).ToListAsync();
+
+      return Ok(_mapper.Map<IEnumerable<WorkoutExerciseDetailsDto>>(workoutExercises));
     }
 
     [HttpPost]
