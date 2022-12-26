@@ -20,6 +20,8 @@ namespace api.Helpers
 
       CreateMap<Workout, WorkoutDetailsDto>()
         .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src => src.Exercises));
+      CreateMap<Workout, WorkoutListItemDto>();
+      CreateMap<CreateWorkoutDto, Workout>();
 
       CreateMap<WorkoutExercise, WorkoutExerciseDetailsDto>()
         .ForMember(dest => dest.Exercise, opt => opt.MapFrom(src => src.Exercise));

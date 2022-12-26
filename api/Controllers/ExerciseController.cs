@@ -59,7 +59,7 @@ namespace api.Controllers
 
       if (exercise == null) return NotFound("Exercise not found");
 
-      var newExercise = _mapper.Map(exerciseDto, exercise);
+      _mapper.Map(exerciseDto, exercise);
 
       try
       {

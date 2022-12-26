@@ -29,12 +29,24 @@ namespace api.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<WorkoutDetailsDto>>> GetWorkouts()
     {
-      var userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      var user = await _context.Users.SingleAsync(u => u.Email == userEmail);
+      var user = await GetUserIdentity();
 
       var workouts = await _context.Workouts.Where(w => w.UserId == user.Id).Include(w => w.Exercises).ThenInclude(e => e.Exercise).ToListAsync();
 
-      return Ok(_mapper.Map<IEnumerable<WorkoutDetailsDto>>(workouts));
+      return Ok(_mapper.Map<IEnumerable<WorkoutListItemDto>>(workouts));
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetWorkout(string id)
+    {
+      var workout = await _context.Workouts.Where(w => w.Id.ToString() == id).Include(w => w.Exercises).ThenInclude(e => e.Exercise).SingleOrDefaultAsync();
+
+      if (workout == null)
+      {
+        return NotFound("No workout with Id = " + id + " was found");
+      }
+
+      return Ok(_mapper.Map<WorkoutDetailsDto>(workout));
     }
 
     [HttpPost]
@@ -58,6 +70,51 @@ namespace api.Controllers
       {
         return StatusCode(500, e);
       }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateWorkout(Guid id, CreateWorkoutDto createWorkoutDto)
+    {
+      var user = await GetUserIdentity();
+      var workout = await _context.Workouts.Where(w => w.UserId == user.Id).Where(w => w.Id == id).SingleOrDefaultAsync();
+
+      if (workout == null)
+      {
+        return NotFound("No workout with Id = " + id + " was found");
+      }
+
+      _mapper.Map(createWorkoutDto, workout);
+
+      try
+      {
+        await _context.SaveChangesAsync();
+        return NoContent();
+      }
+      catch (Exception e)
+      {
+        return StatusCode(500, e);
+      }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteWorkout(Guid id)
+    {
+      var workout = await _context.Workouts.FindAsync(id);
+
+      if (workout == null) return NotFound("No workout with Id = " + id + " was found");
+
+      _context.Workouts.Remove(workout);
+
+      try
+      {
+        await _context.SaveChangesAsync();
+        return NoContent();
+      }
+      catch (Exception e)
+      {
+        return StatusCode(500, e);
+      }
+
     }
 
     private async Task<User> GetUserIdentity()

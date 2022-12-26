@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
 using api.DTOs.WorkoutExercises;
 using api.Models;
@@ -22,22 +18,22 @@ namespace api.Controllers
       _context = context;
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult<WorkoutExercise>> CreateWorkoutExercise(CreateWorkoutExerciseDto createWorkoutExerciseDto)
-    // {
-    //   var newWorkoutExercise = _mapper.Map<WorkoutExercise>(createWorkoutExerciseDto);
+    [HttpPost]
+    public async Task<ActionResult<WorkoutExercise>> CreateWorkoutExercise(CreateWorkoutExerciseDto createWorkoutExerciseDto)
+    {
+      var newWorkoutExercise = _mapper.Map<WorkoutExercise>(createWorkoutExerciseDto);
 
-    //   _context.WorkoutExercises.Add(newWorkoutExercise);
+      _context.WorkoutExercises.Add(newWorkoutExercise);
 
-    //   try
-    //   {
-    //     await _context.SaveChangesAsync();
-    //     return StatusCode(201, newWorkoutExercise);
-    //   }
-    //   catch (Exception e)
-    //   {
-    //     return StatusCode(500, e);
-    //   }
-    // }
+      try
+      {
+        await _context.SaveChangesAsync();
+        return StatusCode(201, newWorkoutExercise);
+      }
+      catch (Exception e)
+      {
+        return StatusCode(500, e);
+      }
+    }
   }
 }
