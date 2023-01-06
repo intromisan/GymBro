@@ -16,10 +16,10 @@ namespace api.Extentions
       // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
       services.AddEndpointsApiExplorer();
       services.AddSwaggerGen();
-      services.AddDbContext<DataContext>(options =>
-      {
-        options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-      });
+      //services.AddDbContext<DataContext>(options =>
+      //{
+      //  options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+      //});
       services.AddCors();
       services.AddScoped<ITokenService, TokenService>();
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
