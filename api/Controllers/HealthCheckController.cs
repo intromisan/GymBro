@@ -13,7 +13,7 @@ namespace api.Controllers
     [HttpGet]
     public IActionResult Get()
     {
-      return Ok("Healthy");
+      return Ok("Healthy updated");
     }
   }
 }
