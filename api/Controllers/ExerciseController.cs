@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
-  [Authorize]
+  // [Authorize]
   public class ExerciseController : BaseApiController
   {
     private readonly DataContext _context;
