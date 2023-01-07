@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -14,11 +15,29 @@ import Feather from "@expo/vector-icons/Feather";
 
 import colors from "../../shared/variables/colors";
 import { Link } from "@react-navigation/native";
+import { useCreateUserMutation } from "../../redux/services/userApi";
+import { useAppDispatch } from "../../shared/hooks";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { onSignIn } from "../../redux/slices/userSlice";
 
 const SignupScreen = () => {
-  const [emailInput, setEmailInput] = useState("");
-  const [nameInput, setNameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [email, setEmailInput] = useState("");
+  const [name, setNameInput] = useState("");
+  const [password, setPasswordInput] = useState("");
+
+  const [signUp] = useCreateUserMutation();
+  const dispatch = useAppDispatch();
+
+  const submitHandler = async () => {
+    try {
+      const session = await signUp({ email, name, password }).unwrap();
+
+      await AsyncStorage.setItem("accessToken", session.token);
+      dispatch(onSignIn(session.token));
+    } catch (error: any) {
+      ToastAndroid.show(error.data, ToastAndroid.SHORT);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -45,9 +64,10 @@ const SignupScreen = () => {
                 <TextInput
                   style={style.input}
                   keyboardType="email-address"
-                  value={emailInput}
+                  value={email}
                   onChangeText={setEmailInput}
                   placeholder="E-mail"
+                  autoCapitalize="none"
                 />
               </View>
               <View style={style.inputWrap}>
@@ -59,9 +79,10 @@ const SignupScreen = () => {
                 />
                 <TextInput
                   style={style.input}
-                  value={nameInput}
+                  value={name}
                   onChangeText={setNameInput}
                   placeholder="Name"
+                  autoCapitalize="none"
                 />
               </View>
               <View style={style.inputWrap}>
@@ -73,10 +94,11 @@ const SignupScreen = () => {
                 />
                 <TextInput
                   style={style.input}
-                  value={passwordInput}
+                  value={password}
                   secureTextEntry={true}
                   onChangeText={setPasswordInput}
                   placeholder="Password"
+                  autoCapitalize="none"
                 />
               </View>
             </View>
@@ -86,15 +108,7 @@ const SignupScreen = () => {
                 Sign in
               </Link>
             </Text>
-            <Pressable
-              onPress={() =>
-                console.log({
-                  email: emailInput,
-                  name: nameInput,
-                  password: passwordInput,
-                })
-              }
-            >
+            <Pressable onPress={submitHandler}>
               <View style={style.button}>
                 <Text style={style.buttonText}>Sign Up</Text>
               </View>
