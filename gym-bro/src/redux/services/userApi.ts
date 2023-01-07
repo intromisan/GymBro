@@ -9,14 +9,14 @@ export const userApi = createApi({
   endpoints: (build) => ({
     createUser: build.mutation<IUserResponse, IUserRegistration>({
       query: (body) => ({
-        url: "/users",
+        url: "/account/register",
         method: "POST",
         body: body,
       }),
     }),
     login: build.mutation<IUserResponse, Partial<IUserRegistration>>({
       query: (body) => ({
-        url: "/auth/signin",
+        url: "/account/login",
         method: "POST",
         body: body,
       }),

@@ -8,15 +8,34 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   View,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import colors from "../../shared/variables/colors";
 import { Link } from "@react-navigation/native";
+import { useLoginMutation } from "../../redux/services/userApi";
+import { useAppDispatch } from "../../shared/hooks";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { onSignIn } from "../../redux/slices/userSlice";
 
 const SigninScreen = () => {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [email, setEmailInput] = useState("");
+  const [password, setPasswordInput] = useState("");
+
+  const [signIn] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
+  const onSubmit = async () => {
+    try {
+      const session = await signIn({ email, password }).unwrap();
+
+      await AsyncStorage.setItem("accessToken", session.token);
+      dispatch(onSignIn(session.token));
+    } catch (error: any) {
+      ToastAndroid.show(error.data, ToastAndroid.SHORT);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -41,7 +60,7 @@ const SigninScreen = () => {
                 <TextInput
                   style={style.input}
                   keyboardType="email-address"
-                  value={emailInput}
+                  value={email}
                   onChangeText={setEmailInput}
                   placeholder="E-mail"
                 />
@@ -55,7 +74,7 @@ const SigninScreen = () => {
                 />
                 <TextInput
                   style={style.input}
-                  value={passwordInput}
+                  value={password}
                   secureTextEntry={true}
                   onChangeText={setPasswordInput}
                   placeholder="Password"
@@ -69,11 +88,7 @@ const SigninScreen = () => {
               </Link>
             </Text>
             {/* <Text style={style.linkText}>Forgot password?</Text> */}
-            <Pressable
-              onPress={() =>
-                console.log({ email: emailInput, password: passwordInput })
-              }
-            >
+            <Pressable onPress={onSubmit}>
               <View style={style.button}>
                 <Text style={style.buttonText}>Log In</Text>
               </View>
