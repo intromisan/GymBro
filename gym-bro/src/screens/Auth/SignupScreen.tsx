@@ -81,7 +81,7 @@ const SignupScreen = () => {
               </View>
             </View>
             <Text style={style.noAccount}>
-              Already have one?{" "}
+              Already have an account?{" "}
               <Link to={{ screen: "SignIn" }} style={style.linkText}>
                 Sign in
               </Link>

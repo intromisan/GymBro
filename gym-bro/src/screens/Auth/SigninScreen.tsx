@@ -63,6 +63,7 @@ const SigninScreen = () => {
                   value={email}
                   onChangeText={setEmailInput}
                   placeholder="E-mail"
+                  autoCapitalize="none"
                 />
               </View>
               <View style={style.inputWrap}>
@@ -78,6 +79,7 @@ const SigninScreen = () => {
                   secureTextEntry={true}
                   onChangeText={setPasswordInput}
                   placeholder="Password"
+                  autoCapitalize="none"
                 />
               </View>
             </View>
