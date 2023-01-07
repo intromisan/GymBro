@@ -1,15 +1,28 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import type { StackScreenProps } from "@react-navigation/stack";
+import { WorkoutNavigationProps } from "../../../shared/types";
+
+type Props = StackScreenProps<WorkoutNavigationProps, "WorkoutDetails">;
+type ProfileScreenNavigationProp = Props["navigation"];
 
 interface WorkoutListItemProps {
   title: string;
   last?: boolean;
+  navigation: ProfileScreenNavigationProp;
 }
 
 const WorkoutListItem: FC<WorkoutListItemProps> = ({ title }) => {
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
   return (
-    <Pressable style={styles.workoutContainer} onPress={() => alert(title)}>
+    <Pressable
+      style={styles.workoutContainer}
+      onPress={() =>
+        navigation.navigate("WorkoutDetails", { workoutId: "qwe" })
+      }
+    >
       <View style={styles.photoPlaceholder}>
         <Ionicons name="ios-image-outline" size={36} color="gray" />
       </View>

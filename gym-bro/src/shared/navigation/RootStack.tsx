@@ -7,7 +7,7 @@ import Tabs from "./Tabs";
 const RootStack = createStackNavigator();
 
 const RootStackScreen = () => {
-  const userToken = "";
+  const userToken = "qwe";
 
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>

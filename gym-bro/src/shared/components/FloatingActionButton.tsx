@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import colors from "../variables/colors";
 
 interface FloatingActionButtonProps {
   onPress: () => void;
@@ -18,7 +19,7 @@ export default FloatingActionButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "tomato",
+    backgroundColor: colors.primary,
     width: 56,
     height: 56,
     borderRadius: 100,

@@ -14,7 +14,7 @@ import Feather from "@expo/vector-icons/Feather";
 import colors from "../../shared/variables/colors";
 import { Link } from "@react-navigation/native";
 
-const LoginScreen = () => {
+const SigninScreen = () => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
 
@@ -85,7 +85,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SigninScreen;
 
 const style = StyleSheet.create({
   loginScreen: {
