@@ -9,25 +9,23 @@ type Props = StackScreenProps<WorkoutNavigationProps, "WorkoutDetails">;
 type ProfileScreenNavigationProp = Props["navigation"];
 
 interface WorkoutListItemProps {
-  title: string;
-  last?: boolean;
-  navigation: ProfileScreenNavigationProp;
+  name: string;
+  id: string;
+  navigation?: ProfileScreenNavigationProp;
 }
 
-const WorkoutListItem: FC<WorkoutListItemProps> = ({ title }) => {
+const WorkoutListItem: FC<WorkoutListItemProps> = ({ name, id }) => {
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   return (
     <Pressable
       style={styles.workoutContainer}
-      onPress={() =>
-        navigation.navigate("WorkoutDetails", { workoutId: "qwe" })
-      }
+      onPress={() => navigation.navigate("WorkoutDetails", { workoutId: id })}
     >
       <View style={styles.photoPlaceholder}>
         <Ionicons name="ios-image-outline" size={36} color="gray" />
       </View>
       <View style={styles.information}>
-        <Text style={styles.workoutTitle}>{title}</Text>
+        <Text style={styles.workoutTitle}>{name}</Text>
       </View>
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.iconButton}>
