@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
@@ -23,7 +24,7 @@ const SigninScreen = () => {
   const [email, setEmailInput] = useState("");
   const [password, setPasswordInput] = useState("");
 
-  const [signIn] = useLoginMutation();
+  const [signIn, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
@@ -90,11 +91,23 @@ const SigninScreen = () => {
               </Link>
             </Text>
             {/* <Text style={style.linkText}>Forgot password?</Text> */}
-            <Pressable onPress={onSubmit}>
-              <View style={style.button}>
-                <Text style={style.buttonText}>Log In</Text>
-              </View>
-            </Pressable>
+            {isLoading ? (
+              <Pressable>
+                <View style={style.button}>
+                  <ActivityIndicator
+                    animating={true}
+                    color={colors.white}
+                    size={24}
+                  />
+                </View>
+              </Pressable>
+            ) : (
+              <Pressable onPress={onSubmit}>
+                <View style={style.button}>
+                  <Text style={style.buttonText}>Log In</Text>
+                </View>
+              </Pressable>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>

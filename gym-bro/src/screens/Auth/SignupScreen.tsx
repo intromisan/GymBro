@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -25,7 +26,7 @@ const SignupScreen = () => {
   const [name, setNameInput] = useState("");
   const [password, setPasswordInput] = useState("");
 
-  const [signUp] = useCreateUserMutation();
+  const [signUp, { isLoading }] = useCreateUserMutation();
   const dispatch = useAppDispatch();
 
   const submitHandler = async () => {
@@ -108,11 +109,23 @@ const SignupScreen = () => {
                 Sign in
               </Link>
             </Text>
-            <Pressable onPress={submitHandler}>
-              <View style={style.button}>
-                <Text style={style.buttonText}>Sign Up</Text>
-              </View>
-            </Pressable>
+            {isLoading ? (
+              <Pressable>
+                <View style={style.button}>
+                  <ActivityIndicator
+                    animating={true}
+                    color={colors.white}
+                    size={24}
+                  />
+                </View>
+              </Pressable>
+            ) : (
+              <Pressable onPress={submitHandler}>
+                <View style={style.button}>
+                  <Text style={style.buttonText}>Sign Up</Text>
+                </View>
+              </Pressable>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>
