@@ -13,5 +13,6 @@ namespace api.Models
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public Guid? DefaultWorkout { get; set; }
   }
 }
