@@ -21,7 +21,11 @@ export const userApi = createApi({
         body: body,
       }),
     }),
+    healthcheck: build.query<string, void>({
+      query: () => `/healthcheck`,
+    }),
   }),
 });
 
-export const { useCreateUserMutation, useLoginMutation } = userApi;
+export const { useCreateUserMutation, useLoginMutation, useHealthcheckQuery } =
+  userApi;

@@ -11,16 +11,16 @@ type ProfileScreenNavigationProp = Props["navigation"];
 interface WorkoutListItemProps {
   title: string;
   last?: boolean;
-  navigation: ProfileScreenNavigationProp;
+  workoutId: string
 }
 
-const WorkoutListItem: FC<WorkoutListItemProps> = ({ title }) => {
+const WorkoutListItem: FC<WorkoutListItemProps> = ({ title, workoutId }) => {
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   return (
     <Pressable
       style={styles.workoutContainer}
       onPress={() =>
-        navigation.navigate("WorkoutDetails", { workoutId: "qwe" })
+        navigation.navigate("WorkoutDetails", { workoutId: workoutId })
       }
     >
       <View style={styles.photoPlaceholder}>
