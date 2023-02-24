@@ -3,19 +3,17 @@ import React from "react";
 import WorkoutListItem from "./components/WorkoutListItem";
 import FloatingActionButton from "../../shared/components/FloatingActionButton";
 
-const Workouts = () => {
-  return (
-    <>
-      <ScrollView style={styles.viewContainer}>
-        <Text style={styles.subtitle}>3 Workouts</Text>
-        <WorkoutListItem title="PPL - 6 days" />
-        <WorkoutListItem title="Workout" />
-        <WorkoutListItem title="Last Workout" />
-      </ScrollView>
-      <FloatingActionButton onPress={() => alert("Create new workout")} />
-    </>
-  );
-};
+const Workouts = () => (
+  <>
+    <ScrollView style={styles.viewContainer}>
+      <Text style={styles.subtitle}>3 Workouts</Text>
+      <WorkoutListItem title="PPL - 6 days" workoutId="qwe" />
+      <WorkoutListItem title="Workout" workoutId="asd" />
+      <WorkoutListItem title="Last Workout" workoutId="zxc" />
+    </ScrollView>
+    <FloatingActionButton onPress={() => alert("Create new workout")} />
+  </>
+);
 
 export default Workouts;
 
