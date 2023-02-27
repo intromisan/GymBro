@@ -32,7 +32,7 @@ const workoutsApi = appApi.injectEndpoints({
       }),
       invalidatesTags: ["Workouts"],
     }),
-    deleteWorkout: build.mutation<void, Pick<IWorkout, "id">>({
+    deleteWorkout: build.mutation<void, string>({
       query: (id) => {
         return {
           url: `/workout/${id}`,
