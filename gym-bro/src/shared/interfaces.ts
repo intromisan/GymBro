@@ -24,10 +24,11 @@ export interface IExercise {
 }
 
 export interface IWorkoutExercise {
+  id: string;
   reps: number;
   sets: number;
   weight?: number;
   restSeconds: number;
-  weekday: string;
+  weekday: number;
   exercise: IExercise;
 }

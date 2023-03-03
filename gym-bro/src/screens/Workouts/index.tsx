@@ -1,19 +1,24 @@
 import {
   ActivityIndicator,
   Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import WorkoutListItem from "./components/WorkoutListItem";
 import FloatingActionButton from "../../shared/components/FloatingActionButton";
 import { useGetWorkoutsQuery } from "../../redux/services/workouts";
 import colors from "../../shared/variables/colors";
 
 const Workouts = () => {
-  const { data: workoutList, isLoading } = useGetWorkoutsQuery();
+  const {
+    data: workoutList,
+    isLoading,
+    refetch: refetchWorkoutList,
+  } = useGetWorkoutsQuery();
 
   if (isLoading)
     return (
@@ -34,13 +39,39 @@ const Workouts = () => {
   if (!workoutList)
     return (
       <View>
-        <Text>No workouts</Text>
+        <Text>Could not retrieve the workout list</Text>
       </View>
+    );
+
+  if (workoutList.length === 0)
+    return (
+      <>
+        <ScrollView
+          style={styles.viewContainer}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={refetchWorkoutList}
+            />
+          }
+        >
+          <Text style={styles.subtitle}>You don't have workouts yet</Text>
+        </ScrollView>
+        <FloatingActionButton onPress={() => alert("Create new workout")} />
+      </>
     );
 
   return (
     <>
-      <ScrollView style={styles.viewContainer}>
+      <ScrollView
+        style={styles.viewContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={refetchWorkoutList}
+          />
+        }
+      >
         <Text style={styles.subtitle}>{workoutList?.length} Workouts</Text>
         {workoutList.map((workout) => (
           <WorkoutListItem key={workout.id} {...workout} />

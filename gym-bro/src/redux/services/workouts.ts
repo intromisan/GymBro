@@ -7,7 +7,7 @@ const workoutsApi = appApi.injectEndpoints({
       query: () => "/workout",
       providesTags: ["Workouts"],
     }),
-    getWorkout: build.query<IWorkout, Pick<IWorkout, "id">>({
+    getWorkout: build.query<IWorkout, string>({
       query: (id) => `/workout/${id}`,
       providesTags: ["Workouts"],
     }),
