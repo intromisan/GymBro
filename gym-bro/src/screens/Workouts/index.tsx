@@ -5,15 +5,22 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Dimensions,
   View,
 } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import WorkoutListItem from "./components/WorkoutListItem";
 import FloatingActionButton from "../../shared/components/FloatingActionButton";
 import { useGetWorkoutsQuery } from "../../redux/services/workouts";
 import colors from "../../shared/variables/colors";
+import CreateWorkoutForm from "./components/CreateWorkoutForm";
+
+const deviceHeight = Dimensions.get("window").height;
+const deviceWidth = Dimensions.get("window").width;
 
 const Workouts = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const {
     data: workoutList,
     isLoading,
@@ -32,7 +39,7 @@ const Workouts = () => {
             />
           </View>
         </ScrollView>
-        <FloatingActionButton onPress={() => alert("Create new workout")} />
+        <FloatingActionButton onPress={() => setIsModalVisible(true)} />
       </>
     );
 
@@ -41,24 +48,6 @@ const Workouts = () => {
       <View>
         <Text>Could not retrieve the workout list</Text>
       </View>
-    );
-
-  if (workoutList.length === 0)
-    return (
-      <>
-        <ScrollView
-          style={styles.viewContainer}
-          refreshControl={
-            <RefreshControl
-              refreshing={isLoading}
-              onRefresh={refetchWorkoutList}
-            />
-          }
-        >
-          <Text style={styles.subtitle}>You don't have workouts yet</Text>
-        </ScrollView>
-        <FloatingActionButton onPress={() => alert("Create new workout")} />
-      </>
     );
 
   return (
@@ -72,12 +61,24 @@ const Workouts = () => {
           />
         }
       >
-        <Text style={styles.subtitle}>{workoutList?.length} Workouts</Text>
-        {workoutList.map((workout) => (
-          <WorkoutListItem key={workout.id} {...workout} />
-        ))}
+        {workoutList.length === 0 ? (
+          <Text style={styles.subtitle}>You don't have workouts yet</Text>
+        ) : (
+          <>
+            <Text style={styles.subtitle}>{workoutList?.length} Workouts</Text>
+            {workoutList.map((workout) => (
+              <WorkoutListItem key={workout.id} {...workout} />
+            ))}
+          </>
+        )}
+
+        <CreateWorkoutForm
+          isVisible={isModalVisible}
+          onClose={() => setIsModalVisible(false)}
+        />
       </ScrollView>
-      <FloatingActionButton onPress={() => alert("Create new workout")} />
+
+      <FloatingActionButton onPress={() => setIsModalVisible(true)} />
     </>
   );
 };
