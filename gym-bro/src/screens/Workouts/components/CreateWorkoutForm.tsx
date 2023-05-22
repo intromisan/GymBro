@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import React, { FC, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -6,6 +12,7 @@ import SlideModal from "../../../shared/components/SlideModal";
 import FormBlock from "../../../shared/components/form/FormBlock";
 import colors from "../../../shared/variables/colors";
 import { useCreateWorkoutMutation } from "../../../redux/services/workouts";
+import LoadingButton from "../../../shared/components/form/LoadingButton";
 
 interface CreateWorkoutFormProps {
   isVisible: boolean;
@@ -18,7 +25,7 @@ const CreateWorkoutForm: FC<CreateWorkoutFormProps> = ({
 }) => {
   const [workoutName, setWorkoutName] = useState("");
 
-  const [createWorkout] = useCreateWorkoutMutation();
+  const [createWorkout, { isLoading }] = useCreateWorkoutMutation();
 
   const onSubmit = async () => {
     try {
@@ -38,7 +45,7 @@ const CreateWorkoutForm: FC<CreateWorkoutFormProps> = ({
       onClose={onClose}
       headerText="Create Workout"
     >
-      <View style={styles.modalForm}>
+      <ScrollView style={styles.modalForm}>
         <FormBlock
           icon={
             <MaterialCommunityIcons
@@ -57,10 +64,14 @@ const CreateWorkoutForm: FC<CreateWorkoutFormProps> = ({
             onChangeText={(text) => setWorkoutName(text)}
           />
         </FormBlock>
-      </View>
-      <Pressable style={styles.submitButtonContainer} onPress={onSubmit}>
-        <Text style={styles.submitButtonText}>Create</Text>
-      </Pressable>
+        {isLoading ? (
+          <LoadingButton color="secondary" />
+        ) : (
+          <Pressable style={styles.submitButtonContainer} onPress={onSubmit}>
+            <Text style={styles.submitButtonText}>Create</Text>
+          </Pressable>
+        )}
+      </ScrollView>
     </SlideModal>
   );
 };
@@ -81,10 +92,9 @@ const styles = StyleSheet.create({
   },
   submitButtonContainer: {
     width: "80%",
-    backgroundColor: colors.accent,
+    backgroundColor: colors.primary,
     alignSelf: "center",
-    position: "absolute",
-    bottom: 50,
+    marginVertical: 20,
     height: 40,
     borderRadius: 20,
     justifyContent: "center",

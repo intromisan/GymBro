@@ -3,9 +3,10 @@ import {
   Text,
   View,
   Modal,
-  Dimensions,
   Pressable,
   KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
 } from "react-native";
 import React, { FC, ReactNode } from "react";
 import colors from "../variables/colors";
@@ -17,9 +18,6 @@ interface SlideModalProps {
   children: ReactNode | ReactNode[];
 }
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
-
 const SlideModal: FC<SlideModalProps> = ({
   isVisible,
   onClose,
@@ -27,9 +25,12 @@ const SlideModal: FC<SlideModalProps> = ({
   children,
 }) => {
   return (
-    <KeyboardAvoidingView >
-      <Modal animationType="slide" visible={isVisible} transparent={true}>
-        <View style={styles.modalContainer}>
+    <Modal animationType="slide" visible={isVisible} transparent={true}>
+      <SafeAreaView style={styles.modalContainer}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <View style={styles.modalHeader}>
             <Text style={styles.headerText}>{headerText}</Text>
           </View>
@@ -37,9 +38,9 @@ const SlideModal: FC<SlideModalProps> = ({
             <Text style={styles.closeText}>Cancel</Text>
           </Pressable>
           {children}
-        </View>
-      </Modal>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 
@@ -47,9 +48,7 @@ export default SlideModal;
 
 const styles = StyleSheet.create({
   modalContainer: {
-    width: deviceWidth,
-    height: deviceHeight - deviceHeight * 0.15,
-    position: "absolute",
+    flex: 1,
     backgroundColor: colors.white,
     bottom: 0,
     left: 0,
