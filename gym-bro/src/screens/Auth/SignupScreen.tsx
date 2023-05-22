@@ -36,9 +36,10 @@ const SignupScreen = () => {
       await AsyncStorage.setItem("accessToken", session.token);
       dispatch(onSignIn(session.token));
     } catch (error: any) {
-      Platform.OS === "android"
-        ? ToastAndroid.show(error.data, ToastAndroid.SHORT)
-        : console.log(error);
+      // Platform.OS === "android"
+      //   ? ToastAndroid.show(error.data, ToastAndroid.SHORT)
+      //   : console.log(error);
+      console.log(error);
     }
   };
 

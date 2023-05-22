@@ -1,12 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Home from "../../screens/Home";
-import Workouts from "../../screens/Workouts";
 import Settings from "../../screens/Settings";
 import colors from "../variables/colors";
-import WorkoutDetails from "../../screens/Workouts/components/WorkoutDetails";
 import WorkoutNavigation from "./WorkoutNavigation";
 
 const Tab = createBottomTabNavigator();
@@ -60,5 +57,3 @@ const Tabs = () => {
 };
 
 export default Tabs;
-
-const styles = StyleSheet.create({});

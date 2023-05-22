@@ -15,7 +15,10 @@ import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import colors from "../../shared/variables/colors";
 import { Link } from "@react-navigation/native";
-import { useHealthcheckQuery, useLoginMutation } from "../../redux/services/userApi";
+import {
+  useHealthcheckQuery,
+  useLoginMutation,
+} from "../../redux/services/userApi";
 import { useAppDispatch } from "../../shared/hooks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { onSignIn } from "../../redux/slices/userSlice";
@@ -34,9 +37,10 @@ const SigninScreen = () => {
       await AsyncStorage.setItem("accessToken", session.token);
       dispatch(onSignIn(session.token));
     } catch (error: any) {
-      Platform.OS === "android"
-        ? ToastAndroid.show(error.data, ToastAndroid.SHORT)
-        : console.log(error);
+      // Platform.OS === "android"
+        // ? ToastAndroid.show(error.data, ToastAndroid.SHORT)
+        // : console.log(error);
+        console.log(error)
     }
   };
 

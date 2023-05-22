@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Config from "react-native-config"
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: "https://gymbro-app.azurewebsites.net/api",
