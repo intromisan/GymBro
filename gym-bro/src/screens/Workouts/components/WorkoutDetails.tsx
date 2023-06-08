@@ -6,13 +6,14 @@ import {
   View,
 } from "react-native";
 import type { StackScreenProps } from "@react-navigation/stack";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { WorkoutNavigationProps } from "../../../shared/types";
 import { useGetWorkoutQuery } from "../../../redux/services/workouts";
 import FloatingActionButton from "../../../shared/components/FloatingActionButton";
 import colors from "../../../shared/variables/colors";
 import { RefreshControl } from "react-native-gesture-handler";
 import WorkoutExerciseListItem from "./WorkoutExerciseListItem";
+import CreateWorkoutExerciseForm from "./CreateWorkoutExerciseForm";
 
 type Props = StackScreenProps<WorkoutNavigationProps, "WorkoutDetails">;
 type WorkoutDetailsScreenRouteProp = Props["route"];
@@ -26,7 +27,9 @@ const WorkoutDetails: FC<WorkoutDetailsProps> = ({ route }) => {
     data: workout,
     isLoading,
     refetch,
-  } = useGetWorkoutQuery(route.params.workoutId);  
+  } = useGetWorkoutQuery(route.params.workoutId);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   if (isLoading)
     return (
@@ -103,7 +106,14 @@ const WorkoutDetails: FC<WorkoutDetailsProps> = ({ route }) => {
             <WorkoutExerciseListItem key={exercise.id} {...exercise} />
           ))}
       </ScrollView>
-      <FloatingActionButton onPress={() => alert("Create new workout")} />
+
+      <CreateWorkoutExerciseForm
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        workoutId={workout.id}
+      />
+
+      <FloatingActionButton onPress={() => setIsModalVisible(true)} />
     </>
   );
 };
@@ -113,7 +123,7 @@ export default WorkoutDetails;
 const styles = StyleSheet.create({
   viewContainer: {
     paddingHorizontal: 25,
-    backgroundColor: "#F7F7F7"
+    backgroundColor: "#F7F7F7",
   },
   spinnerContainer: {
     marginTop: "50%",

@@ -32,3 +32,13 @@ export interface IWorkoutExercise {
   weekday: number;
   exercise: IExercise;
 }
+
+export interface ICreateWorkoutExercise {
+  reps: number;
+  sets: number;
+  weight?: number;
+  restSeconds: number;
+  weekday: number;
+  exerciseId: string;
+  workoutId: string;
+}

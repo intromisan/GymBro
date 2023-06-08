@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   formBlockContainer: {
     flexDirection: "row",
     alignItems: "flex-start",
-    marginTop: 20
+    marginTop: 20,
   },
   iconContainer: {
     marginRight: 30,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.primary,
     fontWeight: "600",
-    marginBottom: 10
+    marginBottom: 10,
   },
   formBlockContent: {
     paddingRight: deviceWidth * 0.12,
