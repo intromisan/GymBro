@@ -13,6 +13,7 @@ import FormBlock from "../../../shared/components/form/FormBlock";
 import colors from "../../../shared/variables/colors";
 import { useCreateWorkoutMutation } from "../../../redux/services/workouts";
 import LoadingButton from "../../../shared/components/form/LoadingButton";
+import SubmitButton from "../../../shared/components/form/SubmitButton";
 
 interface CreateWorkoutFormProps {
   isVisible: boolean;
@@ -67,9 +68,7 @@ const CreateWorkoutForm: FC<CreateWorkoutFormProps> = ({
         {isLoading ? (
           <LoadingButton color="secondary" />
         ) : (
-          <Pressable style={styles.submitButtonContainer} onPress={onSubmit}>
-            <Text style={styles.submitButtonText}>Create</Text>
-          </Pressable>
+          <SubmitButton buttonText="Create" onPress={onSubmit} />
         )}
       </ScrollView>
     </SlideModal>
@@ -89,20 +88,5 @@ const styles = StyleSheet.create({
     color: colors.text,
     borderRadius: 30,
     fontWeight: "500",
-  },
-  submitButtonContainer: {
-    width: "80%",
-    backgroundColor: colors.primary,
-    alignSelf: "center",
-    marginVertical: 20,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  submitButtonText: {
-    fontSize: 16,
-    color: colors.white,
-    fontWeight: "600",
   },
 });

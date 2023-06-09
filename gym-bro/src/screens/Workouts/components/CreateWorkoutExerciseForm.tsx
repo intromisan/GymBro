@@ -19,6 +19,7 @@ import { useGetExercisesQuery } from "../../../redux/services/exercises";
 import { weekdayDropdownList } from "../../../shared/variables/weekdayDropdownList";
 import { useCreateWorkoutExerciseMutation } from "../../../redux/services/workoutExercises";
 import LoadingButton from "../../../shared/components/form/LoadingButton";
+import SubmitButton from "../../../shared/components/form/SubmitButton";
 
 interface CreateWorkoutExerciseFormProps {
   isVisible: boolean;
@@ -33,7 +34,7 @@ const CreateWorkoutExerciseForm: FC<CreateWorkoutExerciseFormProps> = ({
 }) => {
   const { data: exercises } = useGetExercisesQuery();
   const [createWorkoutExercise, { isLoading }] =
-  useCreateWorkoutExerciseMutation();
+    useCreateWorkoutExerciseMutation();
 
   const [exercise, setExercise] = useState("");
   const [weekday, setWeekday] = useState("0");
@@ -41,7 +42,6 @@ const CreateWorkoutExerciseForm: FC<CreateWorkoutExerciseFormProps> = ({
   const [repsNumber, setRepsNumber] = useState("");
   const [weight, setWeight] = useState("");
   const [restTime, setRestTime] = useState("");
-
 
   const onSubmit = async () => {
     try {
@@ -54,11 +54,21 @@ const CreateWorkoutExerciseForm: FC<CreateWorkoutExerciseFormProps> = ({
         exerciseId: exercise,
         workoutId,
       };
-      console.log(workoutExercise);
       await createWorkoutExercise(workoutExercise);
+      cleanForm();
+      onClose();
     } catch (error: any) {
       console.log(error);
     }
+  };
+
+  const cleanForm = () => {
+    setExercise("");
+    setWeekday("0");
+    setSetNumber("");
+    setRepsNumber("");
+    setWeight("");
+    setRestTime("");
   };
 
   if (!exercises)
@@ -96,8 +106,9 @@ const CreateWorkoutExerciseForm: FC<CreateWorkoutExerciseFormProps> = ({
           <Picker
             selectedValue={exercise}
             onValueChange={(itemValue) => {
-              console.log(itemValue)
-              setExercise(itemValue)}}
+              console.log(itemValue);
+              setExercise(itemValue);
+            }}
           >
             {exercises.map((item) => (
               <Picker.Item key={item.id} label={item.name} value={item.id} />
@@ -198,9 +209,7 @@ const CreateWorkoutExerciseForm: FC<CreateWorkoutExerciseFormProps> = ({
         {isLoading ? (
           <LoadingButton color="secondary" />
         ) : (
-          <Pressable style={styles.submitButtonContainer} onPress={onSubmit}>
-            <Text style={styles.submitButtonText}>Create</Text>
-          </Pressable>
+          <SubmitButton buttonText="Create" onPress={onSubmit} />
         )}
       </ScrollView>
     </SlideModal>
@@ -220,21 +229,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     borderRadius: 30,
     fontWeight: "500",
-  },
-  submitButtonContainer: {
-    width: "80%",
-    backgroundColor: colors.primary,
-    alignSelf: "center",
-    marginVertical: 20,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  submitButtonText: {
-    fontSize: 16,
-    color: colors.white,
-    fontWeight: "600",
   },
   viewContainer: {
     paddingHorizontal: 25,
